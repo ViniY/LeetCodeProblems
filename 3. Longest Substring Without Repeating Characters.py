@@ -38,28 +38,39 @@ class Solution(object):
         #         start += 1
         #         i = int(start)
 
-
-        left = 0
-        right = 0
-        used = set()
-        mx = 0
-        if len(set(s)) == len(s): return len(s)
-        if len(set(s)) == 1: return 1
+        #
+        # left = 0
+        # right = 0
+        # used = set()
+        # mx = 0
+        # if len(set(s)) == len(s): return len(s)
+        # if len(set(s)) == 1: return 1
+        # for i, c in enumerate(s):
+        #     if c not in used:
+        #         used.add(c)
+        #         right += 1
+        #     else:
+        #         used.clear()
+        #         mx = right - left
+        #         left = i
+        #         right = left
+        #
+        # if mx > (right - left):
+        #     return mx
+        # else:
+        #     return right - left
+        #40ms version
+        used = {}
+        max_length = start = 0
         for i, c in enumerate(s):
-            if c not in used:
-                used.add(c)
-                right += 1
+            if c in used and start <= used[c]:
+                start = used[c] + 1
             else:
-                used.clear()
-                mx = right - left
-                left = i
-                right = left
+                max_length = max(max_length, i - start + 1)
 
-        if mx > (right - left):
-            return mx
-        else:
-            return right - left
+            used[c] = i
 
+        return max_length
         # if counter>mx: mx=counter
         # print(m)
         # return mx
